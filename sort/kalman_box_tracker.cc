@@ -3,14 +3,9 @@
 #include <glog/logging.h>
 
 #include "kalman_box_tracker.h"
+#include "sort.h"
 
 namespace SORT{
-
-std::ostream& operator<<(std::ostream& os, const Bbox& bbox) {
-  os << "Bbox:" << bbox.x1 << " " << bbox.y1 << " " 
-     << bbox.x2 << " " << bbox.y2;
-  return os;
-}
 
 Vector4f Bbox2Z(const Bbox& bbox) {
   float w = bbox.x2 - bbox.x1;
@@ -41,7 +36,7 @@ KalmanBoxTracker::KalmanBoxTracker(const Bbox& bbox)
   kalman_filter_.state().head<4>() = Bbox2Z(bbox);
 }
 
-void KalmanBoxTracker::Predict() {
+Bbox KalmanBoxTracker::Predict() {
   Vector7f& state = kalman_filter_.state();
   if (state[6] + state[2] <= 0)
     state[6] *= 0;
@@ -50,6 +45,7 @@ void KalmanBoxTracker::Predict() {
   if (predict_times_since_update_ > 0)
     hits_continuous_ = 0;
   predict_times_since_update_++;
+  return this->state();
 }
 
 void KalmanBoxTracker::Update(Bbox bbox) {

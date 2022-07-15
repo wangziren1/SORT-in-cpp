@@ -13,3 +13,4 @@ set(Eigen3_DIR "${PROJECT_SOURCE_DIR}/thirdparty/eigen-3.4.0/build")
 find_package (Eigen3 3.3 REQUIRED NO_MODULE)
 
 add_subdirectory(sort)
+add_subdirectory(MOT15)

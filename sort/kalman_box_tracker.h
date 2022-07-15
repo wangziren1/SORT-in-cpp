@@ -8,23 +8,17 @@
 
 namespace SORT{
 
-struct Bbox {
-  Bbox(float x1, float y1, float x2, float y2) 
-    : x1(x1), y1(y1), x2(x2), y2(y2) {} 
-  
-  float x1;
-  float y1;
-  float x2;
-  float y2;
-};
-std::ostream& operator<<(std::ostream& os, const Bbox& bbox);
+struct Bbox;
 
 class KalmanBoxTracker{
  public:
   KalmanBoxTracker(const Bbox& bbox);
-  void Predict();
+  Bbox Predict();
   void Update(Bbox bbox);
   Bbox state();
+  int predict_times_since_update() { return predict_times_since_update_; }
+  int hits_continuous() { return hits_continuous_; } 
+  int id() { return id_; }
 
  private:
   static int count;

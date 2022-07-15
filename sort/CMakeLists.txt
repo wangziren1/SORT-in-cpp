@@ -1,12 +1,16 @@
+find_package(OpenCV REQUIRED)
+
 add_library(sort 
   hungarian.cc
   kalman_filter.cc 
   kalman_box_tracker.cc
-  linear_assignment.cc)
-target_link_libraries(sort glog::glog Eigen3::Eigen)
+  linear_assignment.cc
+  sort.cc)
+target_link_libraries(sort glog::glog Eigen3::Eigen ${OpenCV_LIBS})
+target_include_directories(sort INTERFACE "${PROJECT_SOURCE_DIR}/sort" ${OpenCV_INCLUDE_DIRS})
 
-add_executable (main main.cc)
-target_link_libraries (main sort)
+add_executable (kalman_box_tracker_test kalman_box_tracker_test.cc)
+target_link_libraries (kalman_box_tracker_test sort)
 
 add_executable (hungarian_test hungarian_test.cc)
 target_link_libraries(hungarian_test sort)

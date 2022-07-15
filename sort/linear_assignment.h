@@ -13,7 +13,7 @@ std::vector<std::vector<float>> ComputeIOUs(const std::vector<Bbox>& detections,
                                             const std::vector<Bbox>& tracks);
 
 struct MatchResult{
-  std::vector<std::pair<int, int>> matches;
+  std::vector<std::pair<int, int>> matches;  // pair: detection index, tracker index
   std::vector<int> unmatched_detections;
   std::vector<int> unmatched_tracks;
 };

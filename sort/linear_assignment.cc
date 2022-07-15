@@ -1,7 +1,7 @@
 #include "linear_assignment.h"
 
 #include "hungarian.h"
-#include "kalman_box_tracker.h"
+#include "sort.h"
 
 namespace SORT {
 
@@ -90,7 +90,8 @@ MatchResult LinearAssignment(const std::vector<Bbox>& detections,
       std::vector<int> assignment;
       hungarian.Solve(NegativeIOUs(ious), assignment);
       for (int i = 0; i < assignment.size(); ++i) {
-        if (assignment[i] != -1)
+        // Filter out matched with low IOU
+        if (assignment[i] != -1 && ious[i][assignment[i]] >= iou_threshold)
         matched_indices.push_back(std::make_pair(i, assignment[i]));
       }
     }
@@ -111,17 +112,7 @@ MatchResult LinearAssignment(const std::vector<Bbox>& detections,
     }
   }
 
-  // Filter out matched with low IOU
-  std::vector<std::pair<int, int>> matches;
-  for (const auto& match : matched_indices) {
-    if (ious[match.first][match.second] < iou_threshold) {
-      unmatched_detections.push_back(match.first);
-      unmatched_tracks.push_back(match.second);
-    } else {
-      matches.push_back(match);
-    }
-  }
-  match_result.matches = matches;
+  match_result.matches = matched_indices;
   match_result.unmatched_detections = unmatched_detections;
   match_result.unmatched_tracks = unmatched_tracks;
   return match_result;

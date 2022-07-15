@@ -1,6 +1,7 @@
 #include <glog/logging.h>
 
 #include "kalman_box_tracker.h"
+#include "sort.h"
 
 using namespace SORT;
 
