@@ -15,7 +15,7 @@ Only opencv needs to be installed manually. Eigen and glog are in thirdparty dir
 # Dataset:
 - download [MOT15](https://motchallenge.net/data/MOT15.zip) data and unzip MOT15.zip to somewhere, e.g. path/to/MOT15.
 
-# Build for linux:
+# Build for linux
 ```
 git clone https://github.com/wangziren1/SORT-in-cpp.git
 cd SORT-in-cpp
@@ -25,14 +25,14 @@ cmake ..
 make
 ```
 
-# Run:
+# Run
 ```
 cd build
 GLOG_logtostderr=1 ./MOT15/MOT15
 ```
 The tracking results will be in output directory.
 
-# Evaluate:
+# Evaluate
 The tracking is evaluated by [TrackEval](https://github.com/JonathonLuiten/TrackEval).
 1. install
 ```
@@ -49,7 +49,7 @@ mkdir SORT_c++ && cd SORT_c++
 cp -r path/to/output .
 mv output data
 ```
-1. evaluate
+3. evaluate
 ```
 python3 scripts/run_mot_challenge.py --BENCHMARK MOT15 --SPLIT_TO_EVAL train --TRACKERS_TO_EVAL SORT_c++ --METRICS HOTA CLEAR Identity VACE --USE_PARALLEL False --NUM_PARALLEL_CORES 1
 ```
