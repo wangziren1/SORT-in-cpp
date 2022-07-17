@@ -6,11 +6,11 @@ namespace SORT {
 
 KalmanFilter::KalmanFilter() {
   x_ = Vector7f::Zero();
-  LOG(WARNING) << "x_:\n" << x_;
+  // LOG(WARNING) << "x_:\n" << x_;
   P_ = Matrix7f::Identity();
   P_.block<3, 3>(4, 4) *= 1000; // give high uncertainty to the unobservable initial velocities
   P_ *= 10;
-  LOG(WARNING) << "P_:\n" << P_;
+  // LOG(WARNING) << "P_:\n" << P_;
 
   F_ << 1, 0, 0, 0, 1, 0, 0,
         0, 1, 0, 0, 0, 1, 0,
@@ -19,20 +19,20 @@ KalmanFilter::KalmanFilter() {
         0, 0, 0, 0, 1, 0, 0,
         0, 0, 0, 0, 0, 1, 0,
         0, 0, 0, 0, 0, 0, 1;
-  LOG(WARNING) << "F_:\n" << F_;
+  // LOG(WARNING) << "F_:\n" << F_;
   Q_ = Matrix7f::Identity();
   Q_(6, 6) *= 0.01;
   Q_.block<3, 3>(4, 4) *= 0.01;
-  LOG(WARNING) << "Q_:\n" << Q_;
+  // LOG(WARNING) << "Q_:\n" << Q_;
   
   H_ << 1, 0, 0, 0, 0, 0, 0,
         0, 1, 0, 0, 0, 0, 0,
         0, 0, 1, 0, 0, 0, 0,
         0, 0, 0, 1, 0, 0, 0;
-  LOG(WARNING) << "H_:\n" << H_;
+  // LOG(WARNING) << "H_:\n" << H_;
   R_ = Matrix4f::Identity();
   R_.block<2, 2>(2, 2) *= 10;
-  LOG(WARNING) << "R_:\n" << R_;
+  // LOG(WARNING) << "R_:\n" << R_;
 
   I7_ = Matrix7f::Identity();
 }

@@ -45,6 +45,7 @@ Bbox KalmanBoxTracker::Predict() {
   if (predict_times_since_update_ > 0)
     hits_continuous_ = 0;
   predict_times_since_update_++;
+  // LOG(INFO) << "predict: " << this->state();
   return this->state();
 }
 

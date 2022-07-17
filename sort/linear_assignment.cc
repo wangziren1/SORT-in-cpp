@@ -99,17 +99,27 @@ MatchResult LinearAssignment(const std::vector<Bbox>& detections,
 
   std::vector<int> unmatched_detections;
   for (int i = 0; i < detections.size(); ++i) {
+    bool is_match = false;
     for (const auto& match : matched_indices) {
-      if (i != match.first)
-        unmatched_detections.push_back(i);
+      if (i == match.first) {
+        is_match = true;
+        break;
+      }
     }
+    if (!is_match)
+      unmatched_detections.push_back(i);
   }
   std::vector<int> unmatched_tracks;
   for(int i = 0; i < tracks.size(); ++i) {
+    bool is_match = false;
     for (const auto& match : matched_indices) {
-      if (i != match.second)
-        unmatched_tracks.push_back(i);
+      if (i == match.second) {
+        is_match = true;
+        break;
+      }
     }
+    if (!is_match)
+      unmatched_tracks.push_back(i);
   }
 
   match_result.matches = matched_indices;

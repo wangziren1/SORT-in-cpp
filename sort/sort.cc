@@ -37,12 +37,13 @@ std::vector<BboxID> Sort::Update(const std::vector<Bbox>& detections) {
   }
   
   std::vector<BboxID> sort_results;
-  for (int i = 0; i < trackers_.size(); ++i) {
+  for (int i = 0; i < trackers_.size();) {
     auto tracker = trackers_[i];
     if (tracker->predict_times_since_update() < 1 && 
         (tracker->hits_continuous() >= min_hits_ ||
          frame_num_ <= min_hits_)) {
-      sort_results.push_back(BboxID{tracker->state(), tracker->id()});
+      // id +1 as MOT benchmark requires positive
+      sort_results.push_back(BboxID{tracker->state(), tracker->id()+1});
     }
     // remove dead tracklet
     if (trackers_[i]->predict_times_since_update() > max_age_for_lost_) {
@@ -50,6 +51,8 @@ std::vector<BboxID> Sort::Update(const std::vector<Bbox>& detections) {
       trackers_[i] = trackers_.back();
       trackers_.back() = temp;
       trackers_.pop_back();
+    } else {
+      i++;
     }
   }
   return sort_results;
