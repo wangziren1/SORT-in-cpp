@@ -12,7 +12,7 @@
 Only opencv needs to be installed manually. Eigen and glog are in thirdparty directory and doesn't need to be installed.
 
 
-# Dataset:
+# Dataset
 - download [MOT15](https://motchallenge.net/data/MOT15.zip) data and unzip MOT15.zip to somewhere, e.g. path/to/MOT15.
 
 # Build for linux
