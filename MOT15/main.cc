@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
 
   // create output directory
   string output_dir("../output/");
-  mkdir("output_dir", S_IRUSR | S_IWUSR | S_IXUSR);
+  mkdir(output_dir.c_str(), S_IRUSR | S_IWUSR | S_IXUSR);
 
   vector<string> file_paths{
     "../data/train/ADL-Rundle-6/det/det.txt",
